@@ -11,6 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
+
 @Entity
 @Table(name = "tab_movimentacao")
 public class Movimentacao {
@@ -18,62 +24,67 @@ public class Movimentacao {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "data_hora")
-	private LocalDateTime dataHora;
 	
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonProperty("dataHora")
+	private LocalDateTime dataHora;
+
 	private String descricao;
 	private Double valor;
-	
+
 	@Enumerated(EnumType.STRING)
 	private MovimentacaoTipo tipo;
-	
-	@Column(name="id_conta")
+
+	@Column(name = "id_conta")
 	private Integer idConta;
-	
+
 	public LocalDateTime getDataHora() {
 		return dataHora;
 	}
+
 	public void setDataHora(LocalDateTime dataHora) {
 		this.dataHora = dataHora;
 	}
+
 	public Integer getIdConta() {
 		return idConta;
 	}
+
 	public void setIdConta(Integer idConta) {
 		this.idConta = idConta;
 	}
-	public int hashCode() {
-		return dataHora.hashCode();
-	}
-	public boolean equals(Object obj) {
-		return dataHora.equals(obj);
-	}
-	public String toString() {
-		return dataHora.toString();
-	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getDescricao() {
 		return descricao;
 	}
+
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
 	public MovimentacaoTipo getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(MovimentacaoTipo tipo) {
 		this.tipo = tipo;
 	}
+
 	public Double getValor() {
 		return valor;
 	}
+
 	public void setValor(Double valor) {
 		this.valor = valor;
 	}
-	
-	
+
 }
